@@ -1,0 +1,78 @@
+syntax = "proto3";
+
+package dummy;
+
+option java_package = "com.proto.calculator";
+
+option java_multiple_files = true;
+
+message SumRequest {
+    int32 firstNumber = 1;
+    int32 secondNumber = 2;
+}
+
+message SumResponse {
+    int32 result = 1;
+}
+
+message PrimeNumberRequest {
+    int32 startNumber = 1;
+    int32 endNumber = 2;
+}
+
+message PrimeNumberResponse {
+    int32 primeNumber = 1;
+}
+
+message MaxNumberRequest {
+    int32 number = 1;
+}
+
+message MaxNumberResponse {
+    int32 maxNumber = 1;
+}
+
+message SquareNumberRequest {
+    int32 number = 1;
+}
+
+message SquareNumberResponse {
+    int32 number = 1;
+}
+
+message SquareRootRequest {
+    int32 number = 1;
+}
+
+message SquareRootResponse {
+    double sqRoot= 1;
+}
+
+message HeavyTaskRequest {
+    string task = 1;
+}
+
+message HeavyTaskResponse {
+    string status = 1;
+}
+
+service CalculatorService {
+
+    // simple rpc service
+    rpc getSum(SumRequest) returns (SumResponse);
+
+    // server streaming service
+    rpc getPrimeNumberStream(PrimeNumberRequest) returns (stream PrimeNumberResponse);
+
+    // client streaming service
+    rpc getMaximumNumber(stream MaxNumberRequest) returns (MaxNumberResponse);
+
+    // server and client both streaming
+    rpc getSquareNumber(stream SquareNumberRequest) returns (stream SquareNumberResponse);
+
+    // error demo
+    rpc getSquareRoot(SquareRootRequest) returns (SquareRootResponse);
+
+    // deadline demo
+    rpc performHeavyTask(HeavyTaskRequest) returns (HeavyTaskResponse);
+}
